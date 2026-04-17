@@ -48,6 +48,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Published npm package should not pin dependents' resolution
+package-lock.json
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
