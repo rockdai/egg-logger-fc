@@ -1,0 +1,56 @@
+{
+  "name": "egg-logger-fc",
+  "version": "0.1.0",
+  "description": "Ship Egg.js logs to Alibaba Cloud SLS via FC stdout (JSON, with RequestId).",
+  "main": "index.js",
+  "files": [
+    "app.js",
+    "index.js",
+    "config",
+    "lib"
+  ],
+  "eggPlugin": {
+    "name": "loggerFC"
+  },
+  "keywords": [
+    "egg",
+    "eggPlugin",
+    "egg-plugin",
+    "logger",
+    "fc",
+    "function-compute",
+    "aliyun",
+    "sls",
+    "serverless"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "test": "npm run lint && npm run test-local",
+    "test-local": "egg-bin test"
+  },
+  "peerDependencies": {
+    "egg": ">=3.0.0",
+    "egg-logger": ">=3.0.0"
+  },
+  "devDependencies": {
+    "egg": "^3.24.1",
+    "egg-bin": "^6.1.2",
+    "egg-logger": "^3.6.1",
+    "egg-mock": "^5.10.6",
+    "eslint": "^8.34.0",
+    "eslint-config-egg": "^14.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rockdai/egg-logger-fc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rockdai/egg-logger-fc/issues"
+  },
+  "homepage": "https://github.com/rockdai/egg-logger-fc#readme",
+  "author": "Dai Wenzhuo",
+  "license": "MIT"
+}

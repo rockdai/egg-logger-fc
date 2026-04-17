@@ -6,6 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Egg.js runtime config dumps written by egg-mock during tests
+test/fixtures/apps/*/run/
+test/fixtures/apps/*/logs/
+
+# Mochawesome reports
+.mochawesome-reports/
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
