@@ -11,6 +11,7 @@ This plugin:
 1. Disables egg-logger's `file` / `jsonFile` transports on every logger.
 2. Replaces the `console` transport with a JSON one that writes to stdout (info / warn / debug) and stderr (error).
 3. Attaches the FC `x-fc-request-id` header plus standard ctx fields (`method`, `url`, `ip`, `userId`, `useMs`) to every request-scoped log line, so each field becomes individually queryable in SLS.
+4. Tags every line with the source logger's name (`logger: "coreLogger" | "errorLogger" | "logger" | "<customLoggerName>"`), so SLS queries can still split what used to live in `egg-web.log` / `common-error.log` / `<app>-web.log` / custom log files.
 
 ## Install
 
@@ -31,8 +32,15 @@ exports.loggerFC = {
 With zero config, business logs land in SLS as:
 
 ```json
-{"time":"2026-04-17T07:00:26.518Z","level":"INFO","pid":12,"hostname":"fc-xxx","msg":"[auth] login ok","requestId":"1-abcdef","method":"POST","url":"/api/auth/session","ip":"10.0.0.1","userId":42,"useMs":34}
+{"time":"2026-04-17T07:00:26.518Z","level":"INFO","pid":12,"hostname":"fc-xxx","msg":"[auth] login ok","logger":"logger","requestId":"1-abcdef","method":"POST","url":"/api/auth/session","ip":"10.0.0.1","userId":42,"useMs":34}
 ```
+
+To slice what used to be separate log files, filter on `logger`:
+
+- `logger: logger` — business logs (was `<app>-web.log`)
+- `logger: coreLogger` — Egg framework core logs (was `egg-web.log`)
+- `logger: errorLogger` — centralized errors (was `common-error.log`)
+- `logger: <name>` — any `config.customLogger[name]` you declared
 
 ## Configure
 
@@ -64,6 +72,7 @@ If you want the transport without the auto-configuration (e.g. to attach it to a
 const { JsonStdoutTransport } = require('egg-logger-fc');
 
 app.getLogger('auditLogger').set('console', new JsonStdoutTransport({
+  name: 'auditLogger', // becomes the `logger` field in every emitted JSON line
   level: 'INFO',
   localStorage: app.ctxStorage,
   requestIdHeader: 'x-fc-request-id',

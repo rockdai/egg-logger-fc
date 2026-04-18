@@ -176,6 +176,24 @@ describe('JsonStdoutTransport', () => {
     assert.strictEqual(parsed.msg, 'hi world, code=7');
   });
 
+  it('tags each line with options.name as the `logger` field', () => {
+    const transport = new JsonStdoutTransport({ level: levels.INFO, name: 'coreLogger' });
+    const { stdout } = captureOutput(() => {
+      transport.log('INFO', [ 'from core' ]);
+    });
+    const parsed = JSON.parse(stdout[0]);
+    assert.strictEqual(parsed.logger, 'coreLogger');
+  });
+
+  it('omits the `logger` field when options.name is not provided', () => {
+    const transport = new JsonStdoutTransport({ level: levels.INFO });
+    const { stdout } = captureOutput(() => {
+      transport.log('INFO', [ 'anonymous' ]);
+    });
+    const parsed = JSON.parse(stdout[0]);
+    assert(!('logger' in parsed));
+  });
+
   it('passes raw writes through', () => {
     const transport = new JsonStdoutTransport({ level: levels.INFO });
     const { stdout } = captureOutput(() => {

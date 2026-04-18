@@ -56,6 +56,13 @@ describe('egg-logger-fc plugin', () => {
     }
   });
 
+  it('tags each transport with the logger name from app.loggers', () => {
+    for (const [ name, logger ] of app.loggers) {
+      const consoleTransport = logger.get('console');
+      assert.strictEqual(consoleTransport.options.name, name);
+    }
+  });
+
   it('respects ALIYUN_FC_LOG_LEVEL when calling configureFCLogging manually', () => {
     const configureFCLogging = require('../lib/configure');
     mm(process.env, 'ALIYUN_FC_LOG_LEVEL', 'warn');
