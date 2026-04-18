@@ -1,6 +1,6 @@
 {
   "name": "egg-logger-fc",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Ship Egg.js logs to Alibaba Cloud SLS via FC stdout (JSON, with RequestId).",
   "main": "index.js",
   "files": [
